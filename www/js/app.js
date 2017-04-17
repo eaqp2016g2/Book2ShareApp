@@ -8,7 +8,7 @@
 angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives','app.services',])
 
 .config(function($ionicConfigProvider, $sceDelegateProvider){
-  
+
 
   $sceDelegateProvider.resourceUrlWhitelist([ 'self','*://www.youtube.com/**', '*://player.vimeo.com/video/**']);
 
@@ -35,7 +35,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives
 */
 .directive('disableSideMenuDrag', ['$ionicSideMenuDelegate', '$rootScope', function($ionicSideMenuDelegate, $rootScope) {
     return {
-        restrict: "A",  
+        restrict: "A",
         controller: ['$scope', '$element', '$attrs', function ($scope, $element, $attrs) {
 
             function stopDrag(){
@@ -55,7 +55,6 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives
         }]
     };
 }])
-
 /*
   This directive is used to open regular and dynamic href links inside of inappbrowser.
 */
@@ -70,7 +69,7 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives
       attrs.$observe('hrefInappbrowser', function(val){
         href = val;
       });
-      
+
       element.bind('click', function (event) {
 
         window.open(href, '_system', 'location=yes');
