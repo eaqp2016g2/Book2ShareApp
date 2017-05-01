@@ -1,4 +1,4 @@
-var API = "http://localhost:3001/api/";
+
 
 angular.module('app.routes', [])
 
@@ -49,7 +49,7 @@ angular.module('app.routes', [])
   .state('login', {
     url: '/login',
     templateUrl: 'templates/login.html',
-    controller: 'loginCtrl'
+    controller: 'LoginCtrl'
   })
 
   .state('signup', {

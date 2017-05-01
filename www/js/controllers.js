@@ -1,3 +1,5 @@
+var API = "http://localhost:3001/api/";
+
 angular.module('app.controllers', [])
 
 .controller('listTabDefaultPageCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
@@ -28,24 +30,73 @@ function ($scope, $stateParams) {
 // You can include any angular dependencies as parameters for this function
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams) {
-
-
 }])
+/*.controller('bOOK2SHARECtrl', ['$scope', '$stateParams', function($scope, $state, $ionicPopup, AuthService, AUTH_EVENTS) {
+  $scope.username = AuthService.username();
 
-.controller('loginCtrl', ['$scope', '$stateParams', function ($scope, $stateParams) {
-  $scope.data = {};
+  $scope.$on(AUTH_EVENTS.notAuthorized, function(event) {
+    var alertPopup = $ionicPopup.alert({
+      title: 'Unauthorized!',
+      template: 'You are not allowed to access this resource.'
+    });
+  });
+
+  $scope.$on(AUTH_EVENTS.notAuthenticated, function(event) {
+    AuthService.logout();
+    $state.go('login');
+    var alertPopup = $ionicPopup.alert({
+      title: 'Session Lost!',
+      template: 'Sorry, You have to login again.'
+    });
+  });
+
+  $scope.setCurrentUsername = function(name) {
+    $scope.username = name;
+  };
+}])*/
+
+/*.controller('loginCtrl', ['$scope', '$stateParams', function ($scope, $http, $rootScope, $state, AuthService) {
+  ionic.Platform.ready(function(){
+
+    	});
+
+    	$scope.login = function() {
+
+        $http({
+            url: API + 'users/login',
+            method: "POST",
+            data: $scope.actualUser
+
+        })
+    		console.info('Authentication...');
+    		AuthService.login($scope.email,$scope.password);
+
+    		setTimeout(function() {
+  			if($scope.token) {
+  				console.info('Successfully logged in...');
+  				$state.go('profile');
+  			}
+  		}, 2000);
+
+    	}
+}])*/
+
+.controller('LoginCtrl', ['$scope', '$stateParams', function($scope, $state, $ionicPopup, AuthService) {
+  $scope.user = {
+    name: '',
+    password: ''
+  };
 
   $scope.login = function() {
-      LoginService.loginUser($scope.data.username, $scope.data.password).success(function(data) {
-          $state.go('tab.dash');
-      }).error(function(data) {
-          var alertPopup = $ionicPopup.alert({
-              title: 'Login failed!',
-              template: 'Please check your credentials!'
-          });
+    AuthService.login($scope.user).then(function(msg) {
+      $state.go('inside');
+    }, function(errMsg) {
+      var alertPopup = $ionicPopup.alert({
+        title: 'Login failed!',
+        template: errMsg
       });
-  }
-
+    });
+  };
 }])
 
 .controller('signupCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
@@ -55,3 +106,34 @@ function ($scope, $stateParams) {
 
 
 }])
+/*.controller('DashCtrl', function($scope, $state, $http, $ionicPopup, AuthService) {
+  $scope.logout = function() {
+    AuthService.logout();
+    $state.go('login');
+  };
+
+  $scope.performValidRequest = function() {
+    $http.get('http://localhost:3001/valid').then(
+      function(result) {
+        $scope.response = result;
+      });
+  };
+
+  $scope.performUnauthorizedRequest = function() {
+    $http.get('http://localhost:3001/notauthorized').then(
+      function(result) {
+        // No result here..
+      }, function(err) {
+        $scope.response = err;
+      });
+  };
+
+  $scope.performInvalidRequest = function() {
+    $http.get('http://localhost:3001/notauthenticated').then(
+      function(result) {
+        // No result here..
+      }, function(err) {
+        $scope.response = err;
+      });
+  };
+});*/

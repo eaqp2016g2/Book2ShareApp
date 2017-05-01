@@ -13,6 +13,9 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives
   $sceDelegateProvider.resourceUrlWhitelist([ 'self','*://www.youtube.com/**', '*://player.vimeo.com/video/**']);
 
 })
+.constant('ApiEndpoint', {
+  url: 'http://localhost:3001/api'
+})
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
