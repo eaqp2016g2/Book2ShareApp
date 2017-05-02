@@ -1,25 +1,21 @@
-<ion-view title="Signup" id="page6">
+<ion-view title="Registre" id="page6">
   <ion-content padding="true" class="has-header">
-    <form id="signup-form4" class="list">
+    <form id="signup-form4" class="list" ng-submit="registra()">
       <ion-list id="signup-list5">
-        <label class="item item-input" id="signup-input3">
-          <span class="input-label">Name</span>
-          <input type="text" placeholder="">
-        </label>
         <label class="item item-input" id="signup-input4">
-          <span class="input-label">Username</span>
-          <input type="text" placeholder="">
+          <span class="input-label">Nom</span>
+          <input type="text" placeholder="" ng-model="newUser.name">
         </label>
         <label class="item item-input" id="signup-input5">
-          <span class="input-label">Password</span>
-          <input type="text" placeholder="">
+          <span class="input-label">Contrasenya</span>
+          <input type="text" placeholder="" ng-model="newUser.password">
         </label>
       </ion-list>
       <label class="item item-input" id="signup-input6">
-        <span class="input-label">e-mail</span>
-        <input type="text" placeholder="">
+        <span class="input-label">Correu electrònic</span>
+        <input type="email" placeholder="" ng-model="newUser.email">
       </label>
-      <a ui-sref="tabsController.listTabDefaultPage" id="signup-button10" class="button button-stable  button-block">Sign up</a>
+      <button type="submit" ui-sref="tabsController.listTabDefaultPage" id="signup-button10" class="button button-stable  button-block">Registra</button>
     </form>
   </ion-content>
 </ion-view>
