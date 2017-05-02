@@ -1,4 +1,4 @@
-var API = "http://localhost:3001/api/";
+var API = "http://localhost:3001/api";
 
 angular.module('app.controllers', [])
 
@@ -31,72 +31,23 @@ function ($scope, $stateParams) {
 // TIP: Access Route Parameters for your page via $stateParams.parameterName
 function ($scope, $stateParams) {
 }])
-/*.controller('bOOK2SHARECtrl', ['$scope', '$stateParams', function($scope, $state, $ionicPopup, AuthService, AUTH_EVENTS) {
-  $scope.username = AuthService.username();
 
-  $scope.$on(AUTH_EVENTS.notAuthorized, function(event) {
-    var alertPopup = $ionicPopup.alert({
-      title: 'Unauthorized!',
-      template: 'You are not allowed to access this resource.'
-    });
-  });
 
-  $scope.$on(AUTH_EVENTS.notAuthenticated, function(event) {
-    AuthService.logout();
-    $state.go('login');
-    var alertPopup = $ionicPopup.alert({
-      title: 'Session Lost!',
-      template: 'Sorry, You have to login again.'
-    });
-  });
-
-  $scope.setCurrentUsername = function(name) {
-    $scope.username = name;
-  };
-}])*/
-
-/*.controller('loginCtrl', ['$scope', '$stateParams', function ($scope, $http, $rootScope, $state, AuthService) {
-  ionic.Platform.ready(function(){
-
-    	});
-
-    	$scope.login = function() {
-
-        $http({
-            url: API + 'users/login',
-            method: "POST",
-            data: $scope.actualUser
-
-        })
-    		console.info('Authentication...');
-    		AuthService.login($scope.email,$scope.password);
-
-    		setTimeout(function() {
-  			if($scope.token) {
-  				console.info('Successfully logged in...');
-  				$state.go('profile');
-  			}
-  		}, 2000);
-
-    	}
-}])*/
-
-.controller('LoginCtrl', ['$scope', '$stateParams', function($scope, $state, $ionicPopup, AuthService) {
-  $scope.user = {
+.controller('LoginCtrl', ['$scope', '$http','$stateParams', function($scope, $http, $state, $ionicPopup, AuthService) {
+  /*$scope.user = {
     name: '',
     password: ''
-  };
-
+  };*/
   $scope.login = function() {
-    AuthService.login($scope.user).then(function(msg) {
-      $state.go('inside');
-    }, function(errMsg) {
-      var alertPopup = $ionicPopup.alert({
-        title: 'Login failed!',
-        template: errMsg
-      });
-    });
-  };
+        $http.post( API + '/users/login', { params: { "username":"jonatancm10@gmail.com", "password": "admin" } })
+            .success(function(data) {
+                $scope.username = data.username;
+                $scope.password = data.password;
+            })
+            .error(function(data) {
+                alert("ERROR");
+            });
+          }
 }])
 
 .controller('signupCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
