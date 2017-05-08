@@ -64,6 +64,13 @@ angular.module('app.routes', [])
     controller: 'LoginCtrl'
   })
 
+  .state('addbook', {
+    url: '/addbook',
+    templateUrl: 'templates/addBook.html',
+    controller: 'AddBookCtrl'
+  })
+
+
 $urlRouterProvider.otherwise('/login')
 
 });

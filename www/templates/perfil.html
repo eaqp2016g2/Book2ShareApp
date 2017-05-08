@@ -3,24 +3,12 @@
     <form id="Perfil-form5" class="list">
       <ion-list id="perfil-list5">
         <label class="item item-input" id="perfil-input3">
-          <span class="input-label">Name</span>
+          <span class="input-label">Name: {{userdata.name}}</span>
           <output type="text" placeholder="user.email" ng-model="user.name">
-        </label>
-        <label class="item item-input" id="perfil-input4">
-          <span class="input-label">Username</span>
-          <input type="text" placeholder="" ng-model="user.avatar">
-        </label>
-        <label class="item item-input" id="perfil-input5">
-          <span class="input-label">Password</span>
-          <input type="password" placeholder="" ng-model="user.password">
-        </label>
-        <label class="item item-input" id="perfil-input5">
-          <span class="input-label">Password Confirm</span>
-          <input type="password" placeholder="" ng-model="user.passsword2">
         </label>
       </ion-list>
       <label class="item item-input" id="perfil-input6">
-        <span class="input-label">e-mail</span>
+        <span class="input-label">e-mail: {{userdata.email}}</span>
         <input type="text" placeholder="" ng-model="user.email">
       </label>
       <a ui-sref="login" id="signup-button10" class="button button-stable  button-block" ng-click="logout()">Log Out</a>

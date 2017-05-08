@@ -2,11 +2,17 @@ var API = "http://localhost:3001/api";
 
 angular.module('app.controllers', [])
 
-.controller('listTabDefaultPageCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
+.controller('listTabDefaultPageCtrl', ['$http','$scope', '$stateParams', function ($http, $scope, $stateParams) {
+  $http({
+      url: API + '/book',
+      method: "GET"
+    })
+      .then(function (response) {
+            $scope.books = response.data;
+            console.log('Libros obtenidos')
+        }, function (error) {
+      console.log('Error al obtener los libros: ' + error.data);
+          });
 
 }])
 
@@ -75,8 +81,17 @@ function ($scope, $stateParams) {
 
 }])
 
-.controller('SignupCtrl', ['$scope', '$http', '$state',function ($http, $state, $scope) {
-    $scope.signup={};
+.controller('SignupCtrl', [ '$http', '$state','$scope', '$rootScope', function ($http, $state, $scope, $rootScope) {
+      $http({
+          url:API + '/users',
+          method: "GET"
+        })
+          .then(function (response) {
+                $scope.users = response.data;
+            }, function (error) {
+          console.log('Error al obtener los usuarios: ' + error.data);
+              });
+          $scope.signup={};
           $scope.register = function () {
               if ($scope.signup.password2 === $scope.signup.password) {
                   $http({
@@ -103,34 +118,26 @@ function ($scope, $stateParams) {
           };
 
 }])
-/*.controller('DashCtrl', function($scope, $state, $http, $ionicPopup, AuthService) {
-  $scope.logout = function() {
-    AuthService.logout();
-    $state.go('login');
-  };
 
-  $scope.performValidRequest = function() {
-    $http.get('http://localhost:3001/valid').then(
-      function(result) {
-        $scope.response = result;
-      });
-  };
+.controller('AddBookCtrl', [ '$http', '$state','$scope', '$rootScope', function ($http, $state, $scope, $rootScope) {
 
-  $scope.performUnauthorizedRequest = function() {
-    $http.get('http://localhost:3001/notauthorized').then(
-      function(result) {
-        // No result here..
-      }, function(err) {
-        $scope.response = err;
-      });
-  };
+          $scope.newBook={};
+          $scope.newBook.user=$rootScope.userdata._id
+          console.log('book', $scope.newBook)
+          $scope.addbook = function () {
+                  $http({
+                      url: API + '/book',
+                      method: "POST",
+                      data: $scope.newBook
+                  })
+                  .then(function (response) {
+                          if (response.data.success == true) {
+                              $scope.newBook={};
+                              //$state.go("library")
+                          } else {
+                              console.log("Ha fallat la publicacio del llibre");
+                          }
+                  });
+          };
 
-  $scope.performInvalidRequest = function() {
-    $http.get('http://localhost:3001/notauthenticated').then(
-      function(result) {
-        // No result here..
-      }, function(err) {
-        $scope.response = err;
-      });
-  };
-});*/
+}])
