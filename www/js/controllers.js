@@ -2,17 +2,30 @@ var API = "http://localhost:3001/api";
 
 angular.module('app.controllers', [])
 
-.controller('listTabDefaultPageCtrl', ['$http','$scope', '$stateParams', function ($http, $scope, $stateParams) {
+.controller('listTabDefaultPageCtrl', ['$http','$scope', '$stateParams', '$rootScope', function ($http, $scope, $stateParams, $rootScope) {
   $http({
-      url: API + '/book',
+      url: API + '/books/user/' + $rootScope.userdata.name,
       method: "GET"
     })
       .then(function (response) {
             $scope.books = response.data;
-            console.log('Libros obtenidos')
+            console.log('Libros obtenidos para mi' +$scope.books)
         }, function (error) {
       console.log('Error al obtener los libros: ' + error.data);
           });
+      /* $scope.getBooks = function () {
+          $http({
+              url: API + '/book',
+              method: "GET"
+          })
+          .then(function (response) {
+                $scope.books = response.data;
+                console.log('Libros obtenidos para mi' +$scope.books)
+            }, function (error) {
+          console.log('Error al obtener los libros: ' + error.data);
+        });
+
+      }*/
 
 }])
 
@@ -119,10 +132,10 @@ function ($scope, $stateParams) {
 
 }])
 
-.controller('AddBookCtrl', [ '$http', '$state','$scope', '$rootScope', function ($http, $state, $scope, $rootScope) {
+.controller('AddBookCtrl', [ '$http', '$state','$scope', '$rootScope', '$ionicPopup', function ($http, $state, $scope, $rootScope, $ionicPopup) {
 
           $scope.newBook={};
-          $scope.newBook.user=$rootScope.userdata._id
+          $scope.newBook.propietary=$rootScope.userdata.name
           console.log('book', $scope.newBook)
           $scope.addbook = function () {
                   $http({
@@ -133,6 +146,10 @@ function ($scope, $stateParams) {
                   .then(function (response) {
                           if (response.data.success == true) {
                               $scope.newBook={};
+                              var alertPopup = $ionicPopup.alert({
+                                title: 'Libro añadido',
+                                template: 'Libro añadido correctamente a tu biblioteca'
+                              })
                               //$state.go("library")
                           } else {
                               console.log("Ha fallat la publicacio del llibre");

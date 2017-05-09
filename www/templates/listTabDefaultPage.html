@@ -6,23 +6,12 @@
         <input type="search" placeholder="Search book">
       </label>
     </form>
-    <ion-list id="listTabDefaultPage-list1">
-      <ion-item class="item-divider" id="listTabDefaultPage-list-item-divider1"> Libros Cercanos</ion-item>
-      <ion-item id="listTabDefaultPage-list-item4">Titulo: </ion-item>
-      <ion-item id="listTabDefaultPage-list-item5">Item 2</ion-item>
-      <ion-item id="listTabDefaultPage-list-item6">Item 3</ion-item>
-    </ion-list>
     <ion-list id="listTabDefaultPage-list2">
-      <ion-item class="item-divider" id="listTabDefaultPage-list-item-divider2"> Mis Libros</ion-item>
-          <ion-item class="item-thumbnail-left">
+      <ion-item class="item-divider"id="listTabDefaultPage-list-item-divider2"> Mis Libros</ion-item>
+          <ion-item class="item-thumbnail-left" ng-repeat="book in books" >
             <img src="./img/juegotronos.jpg">
-            <h2>{{data.title}}</h2>
-            <p>{{book.author[0]}}</p>
-          </ion-item>
-          <ion-item class="item-thumbnail-left">
-            <img src="./img/descarga.png">
-            <h2>TITULO: {{newbook.title}}</h2>
-            <p>AUTOR: {{newbook.author[0]}}</p>
+            <h2> {{book.title}}</h2>
+            <p>Autor: {{book.author[0]}}</p>
           </ion-item>
 </ion-list>
       <a ui-sref="addbook" class="button button-balanced button-block">Añadir Libro</a>
