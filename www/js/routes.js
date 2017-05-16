@@ -53,10 +53,23 @@ angular.module('app.routes', [])
   })
 
   .state('signup', {
-    url: '/page6',
+    url: '/signup',
     templateUrl: 'templates/signup.html',
-    controller: 'signupCtrl'
+    controller: 'SignupCtrl'
   })
+
+  .state('perfil', {
+    url: '/perfil',
+    templateUrl: 'templates/perfil.html',
+    controller: 'LoginCtrl'
+  })
+
+  .state('addbook', {
+    url: '/addbook',
+    templateUrl: 'templates/addBook.html',
+    controller: 'AddBookCtrl'
+  })
+
 
 $urlRouterProvider.otherwise('/login')
 

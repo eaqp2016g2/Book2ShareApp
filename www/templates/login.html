@@ -1,19 +1,19 @@
 <ion-view title="Login" id="page5">
   <ion-content padding="true" class="has-header">
-    <form id="login-form3" class="list"  ng-submit="login()">
+    <form id="login-form3" class="list">
       <ion-list id="login-list4">
         <label class="item item-input" id="login-input1">
           <span class="input-label">Username</span>
-          <input type="text" placeholder="" ng-model="newUser.name">
+          <input type="text" placeholder="Username" ng-model="user.email">
         </label>
         <label class="item item-input" id="login-input2">
           <span class="input-label">Password</span>
-          <input type="password" placeholder="" ng-model="newUser.password">
+          <input type="password" placeholder="Password" ng-model="user.password">
         </label>
       </ion-list>
       <div class="spacer" style="height: 40px;"></div>
-      <a type="submit" ui-sref="tabsController.listTabDefaultPage" id="login-button1" style="font-weight:500;" class="button button-stable  button-block">Inicia sessió</a>
-      <a ui-sref="signup" id="login-button2" class="button button-positive  button-block button-clear">O crea un compte</a>
+      <a ui-sref="tabsController.listTabDefaultPage" id="login-button1" style="font-weight:500;" class="button button-block  button-calm" ng-click="login()">Log in</a>
+      <a ui-sref="signup" id="login-button2" class="button button-positive  button-block button-clear">Or create an account</a>
     </form>
     <div id="login-button-bar1" class="button-bar">
       <button id="login-button8" class="button button-assertive  button-block icon ion-social-googleplus"></button>

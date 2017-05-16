@@ -1,4 +1,4 @@
-<ion-view title="List Tab Default Page" id="page2">
+<ion-view title="Lista de Libros" id="page2">
   <ion-content padding="true" class="has-header">
     <form id="listTabDefaultPage-form2" class="list">
       <label class="item item-input" id="listTabDefaultPage-search3" name="SearchBook">
@@ -6,11 +6,14 @@
         <input type="search" placeholder="Search book">
       </label>
     </form>
-    <ion-list id="listTabDefaultPage-list1">
-      <ion-item class="item-divider" id="listTabDefaultPage-list-item-divider1"> Libros Cercanos</ion-item>
-      <ion-item id="listTabDefaultPage-list-item4">Item 1</ion-item>
-      <ion-item id="listTabDefaultPage-list-item5">Item 2</ion-item>
-      <ion-item id="listTabDefaultPage-list-item6">Item 3</ion-item>
-    </ion-list>
+    <ion-list id="listTabDefaultPage-list2">
+      <ion-item class="item-divider"id="listTabDefaultPage-list-item-divider2"> Mis Libros</ion-item>
+          <ion-item class="item-thumbnail-left" ng-repeat="book in books" >
+            <img src="./img/juegotronos.jpg">
+            <h2> {{book.title}}</h2>
+            <p>Autor: {{book.author[0]}}</p>
+          </ion-item>
+</ion-list>
+      <a ui-sref="addbook" class="button button-balanced button-block">Añadir Libro</a>
   </ion-content>
 </ion-view>

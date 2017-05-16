@@ -1,0 +1,17 @@
+<ion-view title="perfil" id="perfil">
+  <ion-content padding="true" class="has-header">
+    <form id="Perfil-form5" class="list">
+      <ion-list id="perfil-list5">
+        <label class="item item-input" id="perfil-input3">
+          <span class="input-label">Name: {{userdata.name}}</span>
+          <output type="text" placeholder="user.email" ng-model="user.name">
+        </label>
+      </ion-list>
+      <label class="item item-input" id="perfil-input6">
+        <span class="input-label">e-mail: {{userdata.email}}</span>
+        <input type="text" placeholder="" ng-model="user.email">
+      </label>
+      <a ui-sref="login" id="signup-button10" class="button button-stable  button-block" ng-click="logout()">Log Out</a>
+    </form>
+  </ion-content>
+</ion-view>

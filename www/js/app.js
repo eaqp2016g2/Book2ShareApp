@@ -32,6 +32,26 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives
   });
 })
 
+.run(['$rootScope', '$state','$stateParams',
+function($rootScope, $state, $stateParams){
+    $rootScope.$state=$state;
+    $rootScope.$stateParams= $stateParams;
+    console.log('state', $state);
+    if (localStorage.getItem('fs_web_token')) {
+        console.log('L\'usuari ha iniciat sessió, redirigint al portal')
+        $rootScope.logged = true;
+        $rootScope.userdata = JSON.parse(localStorage.getItem("fs_web_userdata"));
+        $state.go("login")
+    }
+    else {
+        console.log('L\'usuari no ha iniciat sessió');
+        localStorage.removeItem('fs_web_userdata');
+        $rootScope.logged = false;
+        $state.go("login")
+
+    }
+}])
+
 /*
   This directive is used to disable the "drag to open" functionality of the Side-Menu
   when you are dragging a Slider component.

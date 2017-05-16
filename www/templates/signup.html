@@ -1,25 +1,25 @@
-<ion-view title="Registre" id="page6">
+<ion-view title="Signup" id="Signup">
   <ion-content padding="true" class="has-header">
-    <form id="signup-form4" class="list" ng-submit="registra()">
+    <form id="Signup-form4" class="list">
       <ion-list id="signup-list5">
-        <label class="item item-input" id="signup-input4">
-          <span class="input-label">Nom</span>
-          <input type="text" placeholder="" ng-model="newUser.name">
+        <label class="item item-input" id="signup-input3">
+          <span class="input-label">Name</span>
+          <input type="text" placeholder="" ng-model="signup.name">
         </label>
         <label class="item item-input" id="signup-input5">
-          <span class="input-label">Contrasenya</span>
-          <input type="text" placeholder="" ng-model="newUser.password">
+          <span class="input-label">Password</span>
+          <input type="password" placeholder="" ng-model="signup.password">
         </label>
         <label class="item item-input" id="signup-input5">
           <span class="input-label">Password Confirm</span>
-          <input type="text" placeholder="">
+          <input type="password" placeholder="" ng-model="signup.password2">
         </label>
       </ion-list>
       <label class="item item-input" id="signup-input6">
-        <span class="input-label">Correu electrònic</span>
-        <input type="email" placeholder="" ng-model="newUser.email">
+        <span class="input-label">e-mail</span>
+        <input type="text" placeholder="" ng-model="signup.email">
       </label>
-      <button type="submit" ui-sref="tabsController.listTabDefaultPage" id="signup-button10" class="button button-stable  button-block">Registra</button>
+      <a ui-sref="login" id="signup-button10" class="button button-block  button-calm" ng-click="register()">Sign up</a>
     </form>
   </ion-content>
 </ion-view>

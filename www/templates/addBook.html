@@ -1,0 +1,33 @@
+<ion-view title="Addbook" id="Addbook">
+  <ion-content padding="true" class="has-header">
+    <form id="Addbook-form" class="list">
+      <ion-list id="addbook-list5">
+        <label class="item item-input" id="addbook-tittle">
+          <span class="input-label">Título</span>
+          <input type="text" placeholder="" ng-model="newBook.title">
+        </label>
+        <label class="item item-input" id="addbook-genre">
+          <span class="input-label">Género</span>
+          <input type="text" placeholder="" ng-model="newBook.genre">
+        </label>
+        <label class="item item-input" id="addbook-year">
+          <span class="input-label">Año</span>
+          <input type="text" placeholder="" ng-model="newBook.year">
+        </label>
+      </ion-list>
+      <label class="item item-input" id="addbook-language">
+        <span class="input-label">Idioma</span>
+        <input type="text" placeholder="" ng-model="newBook.language">
+      </label>
+      <label class="item item-input" id="addbook-author">
+        <span class="input-label">Autor</span>
+        <input type="text" placeholder="" ng-model="newBook.author">
+      </label>
+      <label class="item item-input" id="addbook-editorial">
+        <span class="input-label">Editorial</span>
+        <input type="text" placeholder="" ng-model="newBook.editorial">
+      </label>
+      <a ui-sref="tabsController.listTabDefaultPage" id="addbook-button10" class="button button-block  button-balanced" ng-click="addbook()">Añadir Libro</a>
+    </form>
+  </ion-content>
+</ion-view>
