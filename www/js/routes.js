@@ -30,6 +30,16 @@ angular.module('app.routes', [])
     }
   })
 
+    .state('tabsController.homeTabDefaultPage', {
+      url: '/home',
+      views: {
+        'tab4': {
+          templateUrl: 'templates/homeTabDefaultPage.html',
+          controller: 'homeTabDefaultPageCtrl'
+        }
+      }
+    })
+
   .state('tabsController.mapTabDefaultPage', {
     url: '/map',
     views: {
@@ -70,6 +80,17 @@ angular.module('app.routes', [])
     controller: 'AddBookCtrl'
   })
 
+  .state('bookinfo', {
+    url: '/bookinfo',
+    templateUrl: 'templates/bookInfo.html',
+    controller: 'bookInfoCtrl'
+  })
+
+  .state('editbook', {
+    url: '/editbook',
+    templateUrl: 'templates/editBook.html',
+    controller: 'editBookCtrl'
+  })
 
 $urlRouterProvider.otherwise('/login')
 

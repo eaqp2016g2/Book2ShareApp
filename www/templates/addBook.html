@@ -27,6 +27,12 @@
         <span class="input-label">Editorial</span>
         <input type="text" placeholder="" ng-model="newBook.editorial">
       </label>
+      <label class="item item-input" id="addbook-description">
+        <span class="input-label">Descripción</span>
+        <input type="text" placeholder="" ng-model="newBook.description">
+      </label>
+      <a class="button button-block  button-balanced" ng-click="null">Subir Foto</a>
+
       <a ui-sref="tabsController.listTabDefaultPage" id="addbook-button10" class="button button-block  button-balanced" ng-click="addbook()">Añadir Libro</a>
     </form>
   </ion-content>

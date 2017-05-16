@@ -1,0 +1,44 @@
+<ion-view title="libro" id="libro">
+  <ion-content padding="true" class="has-header">
+    <form id="Libro-form5" class="list">
+      <ion-header-bar class="bar-energized">
+        <h1 class="title text-center">{{book.title}}</h1>
+        <div class="buttons">
+          <button class="button button-icon ion-compose" ui-sref="editbook">
+          </button>
+        </div>
+      </ion-header-bar>
+    <!-- <h2 class = "text-center positive"> {{book.title}} </h2> -->
+    <h2 class = "text-center positive"> _______________________________ </h2>
+      <img src="./img/juegotronos.jpg" >
+        <label class="item item-output" id="libro-input3">
+          <span class="output-label">Titulo: {{book.title}}</span>
+          <output type="text" placeholder="" ng-model="book.title">
+        </label>
+        <label class="item item-output" id="perfil-input6">
+          <span class="output-label">Autor: {{book.author}}</span>
+          <output type="text" placeholder="" ng-model="book.author">
+        </label>
+        <label class="item item-output" id="perfil-input6">
+          <span class="output-label">Año: {{book.year}}</span>
+          <output type="text" placeholder="" ng-model="book.year">
+        </label>
+        <label class="item item-output" id="perfil-input6">
+          <span class="output-label">Idioma: {{book.language}}</span>
+          <output type="text" placeholder="" ng-model="book.language">
+        </label>
+        <label class="item item-output" id="addbook-editorial">
+          <span class="output-label">Editorial: {{book.editorial}}</span>
+          <output type="text" placeholder="" ng-model="book.editorial">
+        </label>
+        <label class="item item-output" id="addbook-editorial">
+          <span class="output-label">Propietario: {{book.propietary}}</span>
+          <output type="text" placeholder="" ng-model="book.propietary">
+        </label>
+        <label class="item item-output" id="addbook-description">
+          <span class="output-label">Descripción: {{book.description}}</span>
+          <input type="text" placeholder="" ng-model="book.description">
+        </label>
+    </form>
+  </ion-content>
+</ion-view>
