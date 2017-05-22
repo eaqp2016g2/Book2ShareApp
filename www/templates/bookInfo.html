@@ -4,7 +4,7 @@
       <ion-header-bar class="bar-energized">
         <h1 class="title text-center">{{book.title}}</h1>
         <div class="buttons">
-          <button class="button button-icon ion-compose" ui-sref="editbook">
+          <button class="button button-icon ion-compose" ui-sref="editbook" ng-click="SelectBook(book)">
           </button>
         </div>
       </ion-header-bar>
@@ -41,7 +41,7 @@
         </label>
         <label class="item item-output" id="addbook-description">
           <span class="output-label">Descripción: {{book.description}}</span>
-          <input type="text" placeholder="" ng-model="book.description">
+          <output type="text" placeholder="" ng-model="book.description">
         </label>
     </form>
   </ion-content>

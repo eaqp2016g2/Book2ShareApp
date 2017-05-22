@@ -51,11 +51,17 @@ angular.module('app.controllers', [])
 }
 }])
 
-.controller('bookInfoCtrl', ['$scope', '$stateParams','$rootScope', function ($scope, $stateParams, $rootScope) {
+.controller('bookInfoCtrl', ['$scope', '$stateParams','$rootScope','$state', function ($scope, $stateParams, $rootScope, $state) {
 
-  $scope.book=$rootScope.booksel;
-  $rootScope.booksel={};
+  $scope.book = $rootScope.booksel;
+  $rootScope.booksel = {};
     console.log("libro sel " +  "****** este " + $scope.book._id);
+
+   $scope.SelectBook = function (book) {
+   $rootScope.booksel=book;
+    console.log("libro sel " + book + "******" + book._id);
+    $state.go("editbook")
+  }
 
 }])
 
@@ -68,10 +74,31 @@ angular.module('app.controllers', [])
 
     }])
 
-.controller('editBookCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
+.controller('editBookCtrl', ['$scope', '$stateParams', '$rootScope', '$http', '$ionicPopup', function ($scope, $stateParams, $rootScope, $http, $ionicPopup) {
+  $scope.book = $rootScope.booksel;
+  $rootScope.booksel = {};
+        console.log("libro sel ****** para editar " + $scope.book._id);
+    $scope.editbook = function (booksel) {
+
+            $http({
+                url: API + '/book/' + $scope.book._id,
+                method: "PUT",
+                data: $scope.book
+            })
+            .then(function (response) {
+                    if (response.data.success == true) {
+                      console.log("libro sel editadooooo");
+                        $scope.book={};
+                        var alertPopup = $ionicPopup.alert({
+                          title: 'Libro Actualizado',
+                          template: 'Libro actualizado correctamente'
+                        })
+                        //$state.go("tabsController.listTabDefaultPage")
+                    } else {
+                        console.log("Ha fallat la edicio del llibre");
+                    }
+            });
+    };
 
 
 }])
@@ -90,11 +117,24 @@ function ($scope, $stateParams) {
     });
 }])
 
-.controller('mapTabDefaultPageCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-    function ($scope, $stateParams) {
+.controller('mapTabDefaultPageCtrl', ['$scope', '$stateParams', '$cordovaGeolocation', function ($scope, $stateParams, $cordovaGeolocation) {
+  var options = {timeout: 10000, enableHighAccuracy: true};
 
+  $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+
+    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+    var mapOptions = {
+      center: latLng,
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+
+    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+  }, function(error){
+    console.log("Could not get location");
+  });
 
     }])
 

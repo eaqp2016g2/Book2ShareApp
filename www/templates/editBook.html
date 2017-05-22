@@ -1,0 +1,39 @@
+<ion-view title="Editar" id="Editbook">
+  <ion-content padding="true" class="has-header">
+    <form id=Editbook-form" class="list">
+      <ion-list id="editbook-list9">
+        <label class="item item-input" id="addbook-tittle">
+          <span class="input-label">Título:</span>
+          <input type="text" placeholder="" ng-model="book.title">
+        </label>
+        <label class="item item-input" id="addbook-genre">
+          <span class="input-label">Género:</span>
+          <input type="text" placeholder="" ng-model="book.genre">
+        </label>
+        <label class="item item-input" id="addbook-year">
+          <span class="input-label">Año:</span>
+          <input type="text" placeholder="" ng-model="book.year">
+        </label>
+      </ion-list>
+      <label class="item item-input" id="addbook-language">
+        <span class="input-label">Idioma:</span>
+        <input type="text" placeholder="" ng-model="book.language">
+      </label>
+      <label class="item item-input" id="addbook-author">
+        <span class="input-label">Autor:</span>
+        <input type="text" placeholder="" ng-model="book.author">
+      </label>
+      <label class="item item-input" id="addbook-editorial">
+        <span class="input-label">Editorial:</span>
+        <input type="text" placeholder="" ng-model="book.editorial">
+      </label>
+      <label class="item item-input" id="addbook-description">
+        <span class="input-label">Descripción:</span>
+        <input type="text" placeholder="" ng-model="book.description">
+      </label>
+      <a class="button button-block  button-balanced" ng-click="null">Subir Foto</a>
+
+      <a ui-sref="tabsController.listTabDefaultPage" id="addbook-button10" class="button button-block  button-balanced" ng-click="editbook(booksel)">Editar Libro</a>
+    </form>
+  </ion-content>
+</ion-view>
