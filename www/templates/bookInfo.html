@@ -16,7 +16,7 @@
           <output type="text" placeholder="" ng-model="book.title">
         </label>
         <label class="item item-output" id="perfil-input6">
-          <span class="output-label">Autor: {{book.author}}</span>
+          <span class="output-label">Autor: {{book.author[0]}}</span>
           <output type="text" placeholder="" ng-model="book.author">
         </label>
         <label class="item item-output" id="perfil-input6">
@@ -26,6 +26,10 @@
         <label class="item item-output" id="perfil-input6">
           <span class="output-label">Idioma: {{book.language}}</span>
           <output type="text" placeholder="" ng-model="book.language">
+        </label>
+        <label class="item item-output" id="addbook-genero">
+          <span class="output-label">Género: {{book.genre[0]}}</span>
+          <input type="text" placeholder="" ng-model="book.genre">
         </label>
         <label class="item item-output" id="addbook-editorial">
           <span class="output-label">Editorial: {{book.editorial}}</span>
