@@ -1,9 +1,9 @@
 <ion-view title="Biblioteca" id="page2">
   <ion-content padding="true" class="has-header">
     <form id="homeTabDefaultPage-form2" class="list">
-      <label class="item item-input" id="homeTabDefaultPage-search3" name="SearchBook">
+      <label class="item item-input item-icon-right" id="homeTabDefaultPage-search3" name="SearchBook">
         <i class="icon ion-search placeholder-icon"></i>
-        <input type="search" placeholder="Search book">
+        <input type="text" placeholder="Search book" ng-model="titleBook" ng-click="SearchBook()">
       </label>
     </form>
     <ion-list id="homeTabDefaultPage-list2">
@@ -15,6 +15,6 @@
             <p>Propietario: {{book.propietary}}</p>
             <p>Genero: {{book.genre[0]}}</p>
           </ion-item>
-</ion-list>
+      </ion-list>
   </ion-content>
 </ion-view>

@@ -29,6 +29,15 @@ angular.module('app.routes', [])
       }
     }
   })
+  .state('chatDetail', {
+    url: '/chatdetail',
+    views: {
+      'chat.name': {
+        templateUrl: 'templates/chat-detail.html',
+        controller: 'chatDetailCtrl'
+      }
+    }
+  })
 
     .state('tabsController.homeTabDefaultPage', {
       url: '/home',

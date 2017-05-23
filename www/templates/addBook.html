@@ -6,18 +6,30 @@
           <span class="input-label">Título</span>
           <input type="text" placeholder="" ng-model="newBook.title">
         </label>
-        <label class="item item-input" id="addbook-genre">
+        <label class="item item-input item-select item-light" id="addbook-genre">
           <span class="input-label">Género</span>
-          <input type="text" placeholder="" ng-model="newBook.genre">
+          <select ng-model="newBook.genre">
+            <option>Fantasia</option>
+            <option>Terror</option>
+            <option>Juvenil</option>
+            <option>Romántico</option>
+            <option>Otros</option>
+          </select>
         </label>
         <label class="item item-input" id="addbook-year">
           <span class="input-label">Año</span>
           <input type="text" placeholder="" ng-model="newBook.year">
         </label>
-      </ion-list>
-      <label class="item item-input" id="addbook-language">
+      <label class="item item-input item-select item-light" id="addbook-language">
         <span class="input-label">Idioma</span>
-        <input type="text" placeholder="" ng-model="newBook.language">
+        <select ng-model="newBook.language">
+          <option>Castellano</option>
+          <option>Catalan</option>
+          <option>Ingles</option>
+          <option>Alemán</option>
+          <option>Japones</option>
+          <option>Otros</option>
+        </select>
       </label>
       <label class="item item-input" id="addbook-author">
         <span class="input-label">Autor</span>
@@ -31,7 +43,8 @@
         <span class="input-label">Descripción</span>
         <input type="text" placeholder="" ng-model="newBook.description">
       </label>
-      <a class="button button-block  button-balanced" ng-click="null">Subir Foto</a>
+      </ion-list>
+      <a class="button button-block  button-energized" ng-click="null">Subir Foto</a>
 
       <a ui-sref="tabsController.listTabDefaultPage" id="addbook-button10" class="button button-block  button-balanced" ng-click="addbook()">Añadir Libro</a>
     </form>

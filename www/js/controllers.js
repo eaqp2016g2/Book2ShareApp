@@ -39,7 +39,8 @@ angular.module('app.controllers', [])
                 var alertPopup = $ionicPopup.alert({
                   title: 'ELIMINADO',
                   template: 'El libro ha sido eliminado!'
-        });
+                });
+              $state.go("tabsController.listTabDefaultPage")
             }, function (error) {
           console.log('Error al eliminar el libro: ' + error.data);
         });
@@ -65,14 +66,15 @@ angular.module('app.controllers', [])
 
 }])
 
-.controller('chatTabDefaultPageCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-    function ($scope, $stateParams) {
-
-
+.controller('chatTabDefaultPageCtrl', ['$scope', '$stateParams', function ($scope, $stateParams, Chats) {
+  /*  $scope.chats = Chats.all();
+    $scope.remove = function(chat) {
+      Chats.remove(chat);
+  };*/
     }])
+.controller('chatDetailCtrl', ['$scope', '$stateParams', function ($scope, $stateParams, Chats) {
+    $scope.chat = Chats.get($stateParams.chatId);
+      }])
 
 .controller('editBookCtrl', ['$scope', '$stateParams', '$rootScope', '$http', '$ionicPopup', function ($scope, $stateParams, $rootScope, $http, $ionicPopup) {
   $scope.book = $rootScope.booksel;
@@ -93,14 +95,12 @@ angular.module('app.controllers', [])
                           title: 'Libro Actualizado',
                           template: 'Libro actualizado correctamente'
                         })
-                        //$state.go("tabsController.listTabDefaultPage")
+                        $state.go("tabsController.listTabDefaultPage")
                     } else {
                         console.log("Ha fallat la edicio del llibre");
                     }
             });
     };
-
-
 }])
 
 .controller('homeTabDefaultPageCtrl', ['$scope', '$stateParams', '$http', '$rootScope', function ($scope, $stateParams, $http, $rootScope) {
@@ -115,6 +115,23 @@ angular.module('app.controllers', [])
         }, function (error) {
       console.log('Error al obtener los libros: ' + error.data);
     });
+    $scope.SearchBook = function(){
+    console.log("Buscando Libro *****  " + this.titleBook);
+      $http({
+                   url: API + '/book/search/title/' + this.titleBook,
+                   method: "GET",
+                   data: $scope.titleBook
+               })
+                   .then(function (response) {
+                           if (response.data != null) {
+                               $rootScope.title={};
+                               $scope.books = response.data;
+                               //$state.go("library")
+                           } else {
+                               console.log("No hi ha cap llibre");
+                           }
+                       });
+    }
 }])
 
 .controller('mapTabDefaultPageCtrl', ['$scope', '$stateParams', '$cordovaGeolocation', function ($scope, $stateParams, $cordovaGeolocation) {
