@@ -1,5 +1,24 @@
-<ion-view title="Map Tab Default Page" id="page4">
+<!DOCTYPE html>
+<ion-view title="MAPA" id="page4">
   <ion-content padding="true" class="has-header">
-      <div id="map" data-tap-disabled="true"></div>
-  </ion-content>
+<html>
+  <head>
+    <style>
+      #map {
+        height: 100%;
+      }
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map" data-tap-disabled="true"></div>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBuiHKYybVq6rCD4HM1rIPmeb-x267JGfY&callback=initMap"
+    async defer></script>
+  </body>
+</html>
+</ion-content>
 </ion-view>

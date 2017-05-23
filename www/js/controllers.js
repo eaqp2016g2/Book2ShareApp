@@ -134,24 +134,32 @@ angular.module('app.controllers', [])
     }
 }])
 
-.controller('mapTabDefaultPageCtrl', ['$scope', '$stateParams', '$cordovaGeolocation', function ($scope, $stateParams, $cordovaGeolocation) {
+.controller('mapTabDefaultPageCtrl', ['$scope', '$stateParams', '$cordovaGeolocation',function ($scope, $stateParams, $cordovaGeolocation) {
   var options = {timeout: 10000, enableHighAccuracy: true};
 
-  $cordovaGeolocation.getCurrentPosition(options).then(function(position){
+ $cordovaGeolocation.getCurrentPosition(options).then(function(position){
 
-    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+   var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-    var mapOptions = {
-      center: latLng,
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
+   var mapOptions = {
+     center: latLng,
+     zoom: 15,
+     mapTypeId: google.maps.MapTypeId.ROADMAP
+   };
 
-    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
+   $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-  }, function(error){
-    console.log("Could not get location");
+   $scope.marker = new google.maps.Marker({
+    position: latLng,
+    label: "HI, IM HERE!!",
+    map: $scope.map
   });
+
+ }, function(error){
+   console.log("Could not get location");
+ });
+
+
 
     }])
 

@@ -4,12 +4,11 @@ angular.module('app.services', [])
 
 }])
 
-
-
 .service('AuthService', function($q, $http, $rootScope, $ionicLoading, ApiEndpoint){
 	var LOCAL_TOKEN_KEY = 'miclavedetokens';
    var isAuthenticated = false;
    var authToken;
+
 
    function loadUserCredentials() {
      var token = window.localStorage.getItem(LOCAL_TOKEN_KEY);
