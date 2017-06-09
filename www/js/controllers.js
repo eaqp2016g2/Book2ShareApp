@@ -94,7 +94,7 @@ angular.module('app.controllers', [])
                         var alertPopup = $ionicPopup.alert({
                           title: 'Libro Actualizado',
                           template: 'Libro actualizado correctamente'
-                        })
+                        });
                         $state.go("tabsController.listTabDefaultPage")
                     } else {
                         console.log("Ha fallat la edicio del llibre");
@@ -200,6 +200,18 @@ angular.module('app.controllers', [])
               });
     };
     $scope.logout = function () {
+
+      var data = {
+        user_id: $rootScope.userdata._id,
+        token: localStorage.getItem("fs_web_token")
+      };
+
+      $http({
+        url: API + '/users/logout',
+        method: "POST",
+        data: data
+      });
+
       localStorage.removeItem("fs_web_token");
       localStorage.removeItem("fs_web_userdata");
       $rootScope.userdata={};
