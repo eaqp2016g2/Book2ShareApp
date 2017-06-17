@@ -4,6 +4,9 @@ angular.module('app.controllers', ['angular.filter'])
 
   .controller('listTabDefaultPageCtrl', ['$http', '$scope', '$stateParams', '$rootScope', '$ionicPopup', '$state', function ($http, $scope, $stateParams, $rootScope, $ionicPopup, $state) {
 
+    /// MI BIBLIOTECA
+
+    $rootScope.booksel = {};
     $scope.users = {};
 
     $http.get(API + '/users')
@@ -57,15 +60,19 @@ angular.module('app.controllers', ['angular.filter'])
     };
 
     $scope.searchBook = function (book) {
+      console.log(book);
       $rootScope.booksel = book;
-      console.log("libro sel " + book + "******" + book._id);
+      console.log("libro sel " + book.title + "******" + book._id);
       $state.go("bookinfo")
     }
   }])
 
   .controller('bookInfoCtrl', ['$http', '$scope', '$stateParams', '$rootScope', '$state', function ($http, $scope, $stateParams, $rootScope, $state) {
 
+    /// INFORMACIÓN DE LIBRO
+
     $scope.users = {};
+    $scope.book = {};
 
     $http.get(API + '/users')
       .then(function (response) {
@@ -74,13 +81,23 @@ angular.module('app.controllers', ['angular.filter'])
         console.log('Error al obtener los usuarios: ' + error.data);
       });
 
-    $scope.book = $rootScope.booksel;
-    $rootScope.booksel = {};
+    console.log($rootScope.booksel);
+
+    $http.get(API + '/book/' + $rootScope.booksel._id)
+      .then(function (response) {
+        $scope.book = response.data;
+      }, function (error) {
+        console.log('Error al obtener el libro: ' + error.data);
+      });
+
+    //$scope.book = $rootScope.booksel;
+    console.log($scope.book);
+    //$rootScope.booksel = {};
     console.log("libro sel " + "****** este " + $scope.book._id);
 
     $scope.SelectBook = function (book) {
       $rootScope.booksel = book;
-      console.log("libro sel " + book + "******" + book._id);
+      console.log("libro sel " + book.title + "******" + book._id);
       $state.go("editbook")
     }
 
@@ -128,7 +145,6 @@ angular.module('app.controllers', ['angular.filter'])
 
   .controller('homeTabDefaultPageCtrl', ['$scope', '$stateParams', '$http', '$rootScope', function ($scope, $stateParams, $http, $rootScope) {
     $scope.users = {};
-
     $http.get(API + '/users')
       .then(function (response) {
         $scope.users = response.data;
