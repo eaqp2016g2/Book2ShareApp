@@ -1,24 +1,20 @@
 angular.module('app.services', [])
 
-.factory('BlankFactory', [function(){
-
-}])
-
 .service('AuthService', function($q, $http, $rootScope, $ionicLoading, ApiEndpoint){
-	var LOCAL_TOKEN_KEY = 'miclavedetokens';
+	//var LOCAL_TOKEN_KEY = 'miclavedetokens';
    var isAuthenticated = false;
    var authToken;
 
 
    function loadUserCredentials() {
-     var token = window.localStorage.getItem(LOCAL_TOKEN_KEY);
+     var token = window.localStorage.getItem('fs_web_token');
      if (token) {
        useCredentials(token);
      }
    }
 
    function storeUserCredentials(token) {
-     window.localStorage.setItem(LOCAL_TOKEN_KEY, token);
+     window.localStorage.setItem('fs_web_token');
      useCredentials(token);
    }
 
@@ -27,14 +23,17 @@ angular.module('app.services', [])
      authToken = token;
 
      // Set the token as header for your requests!
-     $http.defaults.headers.common.Authorization = authToken;
+     //$http.defaults.headers.common.Authorization = authToken;
+     $http.defaults.headers.common['X-Access-Token'] = localStorage.getItem('fs_web_token');
+     $http.defaults.headers.post['X-Access-Token'] = localStorage.getItem('fs_web_token');
    }
 
    function destroyUserCredentials() {
      authToken = undefined;
      isAuthenticated = false;
-     $http.defaults.headers.common.Authorization = undefined;
-     window.localStorage.removeItem(LOCAL_TOKEN_KEY);
+     $http.defaults.headers.common['X-Access-Token'] = undefined;
+     $http.defaults.headers.post['X-Access-Token'] = undefined;
+     window.localStorage.removeItem('fs_web_token');
    }
 	 var login = function(user) {
 	 return $q(function(resolve, reject) {
@@ -59,6 +58,6 @@ angular.module('app.services', [])
 	 login: login,
 	 register: register,
 	 logout: logout,
-	 isAuthenticated: function() {return isAuthenticated;},
+	 isAuthenticated: function() {return isAuthenticated;}
  };
 });
