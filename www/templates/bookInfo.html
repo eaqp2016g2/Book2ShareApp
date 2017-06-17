@@ -13,35 +13,36 @@
       <img src="./img/juegotronos.jpg" >
         <label class="item item-output" id="libro-input3">
           <span class="output-label">Titulo: {{book.title}}</span>
-          <output type="text" placeholder="" ng-model="book.title">
+          <output type="text" placeholder="" ng-model="book.title"></output>
         </label>
-        <label class="item item-output" id="perfil-input6">
+        <label class="item item-output" id="addbook-author">
           <span class="output-label">Autor: {{book.author[0]}}</span>
-          <output type="text" placeholder="" ng-model="book.author">
+          <output type="text" placeholder="" ng-model="book.author"></output>
         </label>
-        <label class="item item-output" id="perfil-input6">
+        <label class="item item-output" id="addbook-year">
           <span class="output-label">Año: {{book.year}}</span>
-          <output type="text" placeholder="" ng-model="book.year">
+          <output type="text" placeholder="" ng-model="book.year"></output>
         </label>
-        <label class="item item-output" id="perfil-input6">
+        <label class="item item-output" id="addbook-language">
           <span class="output-label">Idioma: {{book.language}}</span>
-          <output type="text" placeholder="" ng-model="book.language">
+          <output type="text" placeholder="" ng-model="book.language"></output>
         </label>
         <label class="item item-output" id="addbook-genero">
           <span class="output-label">Género: {{book.genre[0]}}</span>
-          <output type="text" placeholder="" ng-model="book.genre">
+          <output type="text" placeholder="" ng-model="book.genre"></output>
         </label>
         <label class="item item-output" id="addbook-editorial">
           <span class="output-label">Editorial: {{book.editorial}}</span>
-          <output type="text" placeholder="" ng-model="book.editorial">
+          <output type="text" placeholder="" ng-model="book.editorial"></output>
         </label>
-        <label class="item item-output" id="addbook-editorial">
-          <span class="output-label">Propietario: {{book.propietary}}</span>
-          <output type="text" placeholder="" ng-model="book.propietary">
+        <label class="item item-output" id="addbook-propietary">
+          <span ng-repeat="user in users | where: {_id: book.propietary}" class="output-label">
+            Propietario: {{user.name}}</span>
+          <output type="text" placeholder="" ng-model="book.propietary"></output>
         </label>
         <label class="item item-output" id="addbook-description">
           <span class="output-label">Descripción: {{book.description}}</span>
-          <output type="text" placeholder="" ng-model="book.description">
+          <output type="text" placeholder="" ng-model="book.description"></output>
         </label>
     </form>
   </ion-content>

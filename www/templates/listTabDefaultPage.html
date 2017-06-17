@@ -12,7 +12,7 @@
             <img src="./img/juegotronos.jpg">
             <h2> {{book.title}}</h2>
             <p> {{book.author[0]}}</p>
-            <p>Propietary: {{book.propietary}}</p>
+            <p  ng-repeat="user in users | where:{_id: book.propietary}">Propietary: {{user.name}}</p>
             <i class="icon ion-close-round " ng-click="deleteBooks(book)"></i>
           </ion-item>
 </ion-list>
