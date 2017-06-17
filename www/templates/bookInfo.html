@@ -38,7 +38,7 @@
         <label class="item item-output" id="addbook-propietary">
           <span ng-repeat="user in users | where: {_id: book.propietary}" class="output-label">
             Propietario: {{user.name}}</span>
-          <output type="text" placeholder="" ng-model="book.propietary"></output>
+          <output type="text" placeholder="" ng-model="user.name"></output>
         </label>
         <label class="item item-output" id="addbook-description">
           <span class="output-label">Descripción: {{book.description}}</span>
