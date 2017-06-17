@@ -1,10 +1,11 @@
 <ion-view title="Chat Tab Default Page" id="page3">
   <ion-content padding="true" class="has-header">
     <ion-list>
-          <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/tab/chats/{{chat.id}}">
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap">
+          <!--<ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/tab/chats/{{chat.id}}">-->
             <img ng-src="./img/adam.jpg">
-            <h2>{{userdata.name}}</h2>
-            <p>{{chat.lastText}} Hellooooo!! </p>
+            <h2>hellooo{{userdata.name}}</h2>
+            <p>holaa{{chat.lastText}} Hellooooo!! </p>
             <i class="icon ion-chevron-right icon-accessory"></i>
 
             <ion-option-button class="button-assertive" ng-click="remove(chat)">

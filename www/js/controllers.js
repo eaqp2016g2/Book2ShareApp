@@ -73,7 +73,7 @@ angular.module('app.controllers', [])
   };*/
     }])
 .controller('chatDetailCtrl', ['$scope', '$stateParams', function ($scope, $stateParams, Chats) {
-    $scope.chat = Chats.get($stateParams.chatId);
+    //$scope.chat = Chats.get($stateParams.chatId);
       }])
 
 .controller('editBookCtrl', ['$scope', '$stateParams', '$rootScope', '$http', '$ionicPopup', function ($scope, $stateParams, $rootScope, $http, $ionicPopup) {
@@ -158,9 +158,6 @@ angular.module('app.controllers', [])
  }, function(error){
    console.log("Could not get location");
  });
-
-
-
     }])
 
   .controller('bOOK2SHARECtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
