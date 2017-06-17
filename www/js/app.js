@@ -7,6 +7,25 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives','app.services', 'ngCordova'])
 
+  .factory('api', function ($http) {
+    return {
+      init: function () {
+        console.log("Entra TOKENS");
+        $http.defaults.headers.common['X-Access-Token'] = localStorage.getItem('fs_web_token');
+        $http.defaults.headers.post['X-Access-Token'] = localStorage.getItem('fs_web_token');
+      }
+    };
+  })
+  .factory('logout', function ($http) {
+    return {
+      init: function () {
+        console.log("Surt TOKENS");
+        $http.defaults.headers.common['X-Access-Token'] = undefined;
+        $http.defaults.headers.post['X-Access-Token'] = undefined;
+      }
+    };
+  })
+
 .config(function($ionicConfigProvider, $sceDelegateProvider){
 
 
@@ -32,21 +51,23 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.directives
   });
 })
 
-.run(['$rootScope', '$state','$stateParams',
-function($rootScope, $state, $stateParams){
+.run(['$rootScope', '$state','$stateParams', 'api', 'logout',
+function($rootScope, $state, $stateParams, api, logout){
     $rootScope.$state=$state;
     $rootScope.$stateParams= $stateParams;
     console.log('state', $state);
     if (localStorage.getItem('fs_web_token')) {
-        console.log('L\'usuari ha iniciat sessió, redirigint al portal')
+        console.log('L\'usuari ha iniciat sessió, redirigint al portal');
         $rootScope.logged = true;
         $rootScope.userdata = JSON.parse(localStorage.getItem("fs_web_userdata"));
+        api.init();
         $state.go("login")
     }
     else {
         console.log('L\'usuari no ha iniciat sessió');
         localStorage.removeItem('fs_web_userdata');
         $rootScope.logged = false;
+        logout.init();
         $state.go("login")
 
     }

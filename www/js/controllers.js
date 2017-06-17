@@ -6,8 +6,6 @@ angular.module('app.controllers', ['angular.filter'])
 
     $scope.users = {};
 
-    $rootScope.userdata = JSON.parse(localStorage.getItem("fs_web_userdata"));
-
     $http.get(API + '/users')
       .then(function (response) {
         $scope.users = response.data;
@@ -21,8 +19,8 @@ angular.module('app.controllers', ['angular.filter'])
     })
       .then(function (response) {
         $scope.books = response.data;
-        $rootScope.book = JSON.parse(localStorage.getItem("fs_web_book"));
-        console.log('Libros obtenidos para mi ' + $rootScope.book)
+        //$rootScope.book = JSON.parse(localStorage.getItem("fs_web_book"));
+        console.log('Libros obtenidos para mi ' + $scope.books)
       }, function (error) {
         console.log('Error al obtener los libros: ' + error.data);
       });
@@ -34,7 +32,7 @@ angular.module('app.controllers', ['angular.filter'])
       })
         .then(function (response) {
           $scope.books = response.data;
-          console.log('Libros obtenidos para mi' + $rootScope.books)
+          console.log('Libros obtenidos para mi' + $scope.books)
         }, function (error) {
           console.log('Error al obtener los libros: ' + error.data);
         });
@@ -88,18 +86,19 @@ angular.module('app.controllers', ['angular.filter'])
 
   }])
 
-  .controller('chatTabDefaultPageCtrl', ['$http','$scope', '$stateParams', '$Chats', function ($http, $scope, $stateParams, $Chats) {
-    $scope.chats = Chats.all();
+  .controller('chatTabDefaultPageCtrl', ['$http','$scope', '$stateParams', function ($http, $scope, $stateParams) {
+  /*  $scope.chats = Chats.all();
     $scope.remove = function(chat) {
       Chats.remove(chat);
-    };
+    };*/
   }])
-  .controller('chatDetailCtrl', ['$scope', '$stateParams', function ($scope, $stateParams, Chats) {
-    $scope.chat = Chats.get($stateParams.chatId);
+  .controller('chatDetailCtrl', ['$scope', '$stateParams', function ($scope, $stateParams) {
+  /*  $scope.chat = Chats.get($stateParams.chatId);*/
   }])
 
 
-  .controller('editBookCtrl', ['$scope', '$stateParams', '$rootScope', '$http', '$ionicPopup', function ($scope, $stateParams, $rootScope, $http, $ionicPopup) {
+  .controller('editBookCtrl', ['$state', '$scope', '$stateParams', '$rootScope', '$http', '$ionicPopup', function ($scope, $stateParams, $rootScope, $http, $ionicPopup, $state) {
+
     $scope.book = $rootScope.booksel;
     $rootScope.booksel = {};
     console.log("libro sel ****** para editar " + $scope.book._id);
@@ -128,15 +127,22 @@ angular.module('app.controllers', ['angular.filter'])
   }])
 
   .controller('homeTabDefaultPageCtrl', ['$scope', '$stateParams', '$http', '$rootScope', function ($scope, $stateParams, $http, $rootScope) {
+    $scope.users = {};
 
+    $http.get(API + '/users')
+      .then(function (response) {
+        $scope.users = response.data;
+      }, function (error) {
+        console.log('Error al obtener los usuarios: ' + error.data);
+    });
     $http({
       url: API + '/book',
       method: "GET"
     })
       .then(function (response) {
         $scope.books = response.data;
-        $rootScope.book = JSON.parse(localStorage.getItem("fs_web_book"));
-        console.log('Libros obtenidos para mi' + $rootScope.books)
+        //$rootScope.book = JSON.parse(localStorage.getItem("fs_web_book"));
+        console.log('Libros obtenidos para mi' + $scope.books)
       }, function (error) {
         console.log('Error al obtener los libros: ' + error.data);
       });
@@ -148,7 +154,7 @@ angular.module('app.controllers', ['angular.filter'])
         data: $scope.titleBook
       })
         .then(function (response) {
-          if (response.data != null) {
+          if (response.data !== null) {
             $rootScope.title = {};
             $scope.books = response.data;
             //$state.go("library")
@@ -193,7 +199,7 @@ angular.module('app.controllers', ['angular.filter'])
     function ($scope, $stateParams) {
     }])
 
-  .controller('LoginCtrl', ['$scope', '$http', '$state', '$ionicPopup', '$rootScope', function ($scope, $http, $state, $ionicPopup, $rootScope, $AuthService) {
+  .controller('LoginCtrl', ['$scope', '$http', '$state', '$ionicPopup', '$rootScope', 'logout', function ($scope, $http, $state, $ionicPopup, $rootScope, $AuthService, logout) {
     $scope.user = {};
     $scope.login = function () {
       $http({
@@ -203,7 +209,7 @@ angular.module('app.controllers', ['angular.filter'])
 
       })
         .then(function (response) {
-            if (response.data.success == true) {
+            if (response.data.success === true) {
               localStorage.setItem("fs_web_token", response.data.token);
               localStorage.setItem("fs_web_userdata", JSON.stringify(response.data.user));
               $rootScope.logged = true;
@@ -238,6 +244,7 @@ angular.module('app.controllers', ['angular.filter'])
 
       localStorage.removeItem("fs_web_token");
       localStorage.removeItem("fs_web_userdata");
+      logout.init();
       $rootScope.userdata = {};
       $rootScope.logged = false;
     };
@@ -261,7 +268,7 @@ angular.module('app.controllers', ['angular.filter'])
           data: $scope.signup
         })
           .then(function (response) {
-            if (response.data.success == true) {
+            if (response.data.success === true) {
               localStorage.setItem("fs_web_token", response.data.token);
               localStorage.setItem("fs_web_userdata", JSON.stringify(response.data.user));
               $state.go("login")
@@ -276,8 +283,8 @@ angular.module('app.controllers', ['angular.filter'])
   .controller('AddBookCtrl', ['$http', '$state', '$scope', '$rootScope', '$ionicPopup', function ($http, $state, $scope, $rootScope, $ionicPopup) {
 
     $scope.newBook = {};
-    $scope.newBook.propietary = $rootScope.userdata.name
-    console.log('book', $scope.newBook)
+    //$scope.newBook.propietary = $rootScope.userdata.name;
+    console.log('book', $scope.newBook);
     $scope.addbook = function () {
       $http({
         url: API + '/book',
@@ -285,16 +292,17 @@ angular.module('app.controllers', ['angular.filter'])
         data: $scope.newBook
       })
         .then(function (response) {
-          if (response.data.success == true) {
+          console.log(response.data);
+          if (response.data.success === true) {
             $scope.newBook = {};
             var alertPopup = $ionicPopup.alert({
               title: 'Libro añadido',
               template: 'Libro añadido correctamente a tu biblioteca'
-            })
+            });
             $state.go("tabsController.listTabDefaultPage")
           } else {
             console.log("Ha fallat la publicacio del llibre");
           }
         });
     };
-  }])
+  }]);
