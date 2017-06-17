@@ -12,8 +12,8 @@
             <img src="./img/descarga.png">
             <h2> {{book.title}}</h2>
             <p>Autor: {{book.author[0]}}</p>
-            <p>Propietario: {{book.propietary}}</p>
-            <p>Genero: {{book.genre[0]}}</p>
+            <p  ng-repeat="user in users | where:{_id: book.propietary}">Propietario: {{user.name}}</p>
+            <p>Género: {{book.genre[0]}}</p>
           </ion-item>
       </ion-list>
   </ion-content>
