@@ -6,6 +6,8 @@ angular.module('app.controllers', ['angular.filter'])
 
     $scope.users = {};
 
+    $rootScope.userdata = JSON.parse(localStorage.getItem("fs_web_userdata"));
+
     $http.get(API + '/users')
       .then(function (response) {
         $scope.users = response.data;
@@ -45,7 +47,7 @@ angular.module('app.controllers', ['angular.filter'])
         method: "DELETE"
       })
         .then(function (response) {
-          console.log('Libro eliminado' + $scope.books)
+          console.log('Libro eliminado' + $scope.books);
           var alertPopup = $ionicPopup.alert({
             title: 'ELIMINADO',
             template: 'El libro ha sido eliminado!'
@@ -109,7 +111,7 @@ angular.module('app.controllers', ['angular.filter'])
       data: $scope.book
     })
       .then(function (response) {
-        if (response.data.success == true) {
+        if (response.data.success === true) {
           console.log("libro sel editadooooo");
           $scope.book = {};
           var alertPopup = $ionicPopup.alert({
