@@ -9,9 +9,10 @@
     <ion-list id="listTabDefaultPage-list2">
       <ion-item class="item-divider"id="listTabDefaultPage-list-item-divider2"> Mis Libros</ion-item>
           <ion-item class="item-thumbnail-left item-icon-right" ng-repeat="book in books"  ui-sref="bookinfo" ng-click = "searchBook(book)">
-            <img src="./img/juegotronos.jpg">
+            <img height="50 px" width="30 px" src="./img/juegotronos.jpg">
             <h2> {{book.title}}</h2>
-            <p> {{book.author[0]}}</p>
+            <p> Autor: {{book.author[0]}}</p>
+            <p> Género: {{book.genre[0]}}</p>
             <p  ng-repeat="user in users | where:{_id: book.propietary}">Propietario: {{user.name}}</p>
             <i class="icon ion-close-round " ng-click="deleteBooks(book)"></i>
           </ion-item>

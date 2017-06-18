@@ -1,0 +1,42 @@
+<!--<ion-dialog aria-label="Nou missatge"  style="
+max-width: 100%;
+    max-height: 100%;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;">
+    <form ng-cloak>
+        <ion-toolbar>-->
+<ion-view title="Estudiants" id="page2">
+  <ion-content padding="true" class="has-header">
+            <div class="row header">
+                <h2>Nou missatge</h2>
+                <span flex></span>
+                <button class="ion-icon-button" ng-click="cancel()">
+                    <ion-icon style="width: 24px; height: 24px" md-svg-src="../img/ic_close_24px.svg"
+                             aria-label="Tanca"></ion-icon>
+                </button>
+            </div>
+        <ion-dialog-content>
+            <div class="md-dialog-content">
+                <ion-input-container class="md-block" flex-gt-sm>
+                    <label>Destí</label>
+
+                    <ion-select ng-model="newMessage.userB">
+                        <ion-option class="form-control input-lg text-center"
+                                ng-repeat="user in users | omit: check"
+                                value="{{user._id}}">{{user.name}}
+                        </ion-option>
+                    </ion-select>
+                </ion-input-container>
+                <ion-input-container class="md-block">
+                    <label>Missatge</label>
+                    <textarea ng-model="newMessage.content" md-maxlength="1000" rows="5" md-select-on-focus></textarea>
+                </ion-input-container>
+            </div>
+        </ion-dialog-content>
+        <ion-dialog-actions layout="row">
+            <span flex></span>
+            <ion-button ng-click="sendMessage(newMessage.userB)" class="md-raised md-primary">Envia</ion-button>
+        </ion-dialog-actions>
+    </form>
+</ion-dialog>

@@ -93,7 +93,7 @@ angular.module('app.controllers', ['angular.filter'])
     //$scope.book = $rootScope.booksel;
     console.log($scope.book);
     //$rootScope.booksel = {};
-    console.log("libro sel " + "****** este " + $scope.book._id);
+
 
     $scope.SelectBook = function (book) {
       $rootScope.booksel = book;
@@ -103,25 +103,255 @@ angular.module('app.controllers', ['angular.filter'])
 
   }])
 
-  .controller('chatTabDefaultPageCtrl', ['$http','$scope', '$stateParams', function ($http, $scope, $stateParams) {
-  /*  $scope.chats = Chats.all();
-    $scope.remove = function(chat) {
-      Chats.remove(chat);
-    };*/
-  }])
-  .controller('chatDetailCtrl', ['$scope', '$stateParams', function ($scope, $stateParams) {
-  /*  $scope.chat = Chats.get($stateParams.chatId);*/
-  }])
+  .controller('chatTabDefaultPageCtrl', ['$http','$scope', '$stateParams','$state','$rootScope', function ($http, $scope, $stateParams, $state, $rootScope) {
 
+            $scope.check = function(user){
+                if(user._id===$rootScope.userdata._id){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            }
+
+            var userdata = JSON.parse(localStorage.getItem("fs_web_userdata"));
+            $scope.conversations = userdata.conversations;
+
+            $scope.refreshConversations = function(user_id){
+                $http.get(API +'/conversations/' + user_id)
+                    .then(function(response) {
+                        localStorage.setItem("fs_web_userdata", JSON.stringify(response.data.user));
+                        userdata = JSON.parse(localStorage.getItem("fs_web_userdata"));
+                        $scope.conversations = userdata.conversations;
+                    }, function (error){
+                        console.log('Error al obtener el usuario: ' + error.data);
+                    });
+            };
+
+            $scope.showComposer = function (ev) {
+                $mdDialog.show({
+                    controller: DialogController,
+                    templateUrl: 'composer.html',
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: true,
+                    fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+                })
+                    .then(function (answer) {
+                        $scope.status = 'You said the information was "' + answer + '".';
+                    }, function () {
+                        $scope.status = 'You cancelled the dialog.';
+                    });
+            };
+            function DialogController($scope, $mdDialog) {
+                $scope.hide = function () {
+                    $mdDialog.hide();
+                };
+
+                $scope.cancel = function () {
+                    $mdDialog.cancel();
+                };
+
+                $scope.answer = function (answer) {
+                    $mdDialog.hide(answer);
+                };
+            }
+
+            console.log(userdata.conversations[0]);
+          //  $scope.finestraxat;
+            $scope.destinatari;
+
+            // Obtener todos los usuarios
+            $http.get(API +'/users')
+                .then(function(response) {
+                    $scope.users = response.data;
+                    if(userdata.conversations[0] !== undefined) {
+                        console.log("Conversations not null");
+                        //$scope.finestraxat=true;
+                        $scope.getMessages(userdata.conversations[0]);
+                    }
+                    else{
+                        console.log("Conversations null");
+                        $scope.finestraxat=false;
+                    }
+                }, function (error){
+                    console.log('Error al obtener los usuarios: ' + error.data);
+                });
+            // Seleccionar conversa
+            $scope.selectConversation = function (user) {
+                    $scope.selected = true;
+                    console.log(user._id);
+                    $scope.getMessages(user._id);
+                    console.log("usuario " + user._id + "******" + user.name);
+                    console.log($scope.selected);
+                  //  $state.go("chatDetail");
+            };
+
+            // Obtener todos los mensajes de un usuario determinado
+            $scope.conversation = {};
+            $scope.conversation2 = {};
+
+            $scope.getMessages = function (user_id) {
+                $http.get(API + '/msg/' + user_id)
+                    .then(function (response) {
+                        $scope.conversation = response.data;
+                        $scope.conversation2 = orderMessages($scope.conversation, user_id);
+                    }, function (error) {
+                        console.log('Error al obtener los mensajes: ' + error.data);
+                    });
+
+                function orderMessages(conversation, user) {
+                    conversation.user = user;
+
+                    for (var message of conversation) {
+                        if (message.userA === userdata._id) {
+                            message.send = "message sent";
+                            if(message.read === true){
+                                message.tick= "../img/msg-dblcheck-ack.svg";
+                            }
+                            else{
+                                if(message.delivered === true){
+                                    message.tick = "../img/msg-dblcheck.svg";
+                                }
+                                else{
+                                    message.tick = "../img/msg-check.svg";
+                                }
+                            }
+                        }
+                        else {
+                            message.send = "message received";
+                        }
+                    }
+                    return conversation;
+                }
+                return $scope.conversation2;
+            };
+
+            $scope.newMessage={};
+
+            $scope.sendMessage = function (destinatari) {
+                if (($scope.newMessage.content != "") && ($scope.newMessage.content)) {
+                    //$scope.newMessage.userA = userdata._id;
+                    $scope.newMessage.userB = destinatari;
+                    $http({
+                        url: API + '/msg',
+                        method: "POST",
+                        data: $scope.newMessage
+                    })
+                        .then(function (data) {
+                                console.log(data);
+                                $scope.newMessage = {};
+                                $scope.refreshConversations(userdata._id);
+                                $scope.getMessages(destinatari);
+                            },
+                            function () {
+                 //               toastr.error('Error a l\'enviar el missatge');
+                            });
+                }
+                $mdDialog.cancel();
+            };
+  }])
+  /*.controller('chatDetailCtrl', ['$http','$scope', '$stateParams','$state','$rootScope', function ($http, $scope, $stateParams, $state, $rootScope) {
+    var userdata = JSON.parse(localStorage.getItem("fs_web_userdata"));
+    $scope.conversations = userdata.conversations;
+                // Obtener todos los usuarios
+                $http.get(API +'/users')
+                    .then(function(response) {
+                        $scope.users = response.data;
+                        if(userdata.conversations[0] !== undefined) {
+                            console.log("Conversations not null");
+                            //$scope.finestraxat=true;
+                            $scope.getMessages(userdata.conversations[0]);
+                        }
+                        else{
+                            console.log("Conversations null");
+                            $scope.finestraxat=false;
+                        }
+                    }, function (error){
+                        console.log('Error al obtener los usuarios: ' + error.data);
+                    });
+                // Seleccionar conversa
+                $scope.selectConversation = function (user) {
+                        $scope.selected = true;
+                        console.log(user._id);
+                        $scope.getMessages(user._id);
+                        console.log("usuario " + user._id + "******" + user.name);
+                        console.log($scope.selected);
+                        $state.go("chatDetail");
+                };
+
+    // Obtener todos los mensajes de un usuario determinado
+    $scope.conversation = {};
+    $scope.conversation2 = {};
+
+    $scope.getMessages = function (user_id) {
+        $http.get(API + '/msg/' + user_id)
+            .then(function (response) {
+                $scope.conversation = response.data;
+                $scope.conversation2 = orderMessages($scope.conversation, user_id);
+            }, function (error) {
+                console.log('Error al obtener los mensajes: ' + error.data);
+            });
+
+        function orderMessages(conversation, user) {
+            conversation.user = user;
+
+            for (var message of conversation) {
+                if (message.userA === userdata._id) {
+                    message.send = "message sent";
+                    if(message.read === true){
+                        message.tick= "../img/msg-dblcheck-ack.svg";
+                    }
+                    else{
+                        if(message.delivered === true){
+                            message.tick = "../img/msg-dblcheck.svg";
+                        }
+                        else{
+                            message.tick = "../img/msg-check.svg";
+                        }
+                    }
+                }
+                else {
+                    message.send = "message received";
+                }
+            }
+            return conversation;
+        }
+        return $scope.conversation2;
+    };
+
+    $scope.newMessage={};
+
+    $scope.sendMessage = function (destinatari) {
+        if (($scope.newMessage.content != "") && ($scope.newMessage.content)) {
+            //$scope.newMessage.userA = userdata._id;
+            $scope.newMessage.userB = destinatari;
+            $http({
+                url: API + '/msg',
+                method: "POST",
+                data: $scope.newMessage
+            })
+                .then(function (data) {
+                        console.log(data);
+                        $scope.newMessage = {};
+                        $scope.refreshConversations(userdata._id);
+                        $scope.getMessages(destinatari);
+                    },
+                    function () {
+         //               toastr.error('Error a l\'enviar el missatge');
+                    });
+        }
+        $mdDialog.cancel();
+    };
+
+  }])*/
 
   .controller('editBookCtrl', ['$state', '$scope', '$stateParams', '$rootScope', '$http', '$ionicPopup', function ($scope, $stateParams, $rootScope, $http, $ionicPopup, $state) {
 
     $scope.book = $rootScope.booksel;
     $rootScope.booksel = {};
-    console.log("libro sel ****** para editar " + $scope.book._id);
     $scope.editbook = function (booksel) {
-
-    $http({
+      $http({
       url: API + '/book/' + $scope.book._id,
       method: "PUT",
       data: $scope.book
@@ -187,6 +417,9 @@ angular.module('app.controllers', ['angular.filter'])
     $cordovaGeolocation.getCurrentPosition(options).then(function (position) {
 
       var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+      var Fira = new google.maps.LatLng( 41.35448,  2.12698);
+      var ZonaFranca = new google.maps.LatLng(41.365556, 2.141667);
+      var CampNou = new google.maps.LatLng(41.379635, 2.124209);
 
       var mapOptions = {
         center: latLng,
@@ -202,11 +435,57 @@ angular.module('app.controllers', ['angular.filter'])
         map: $scope.map
       });
 
+      //ADD Marker
+
+      google.maps.event.addListenerOnce($scope.map, 'idle', function(){
+
+        var marker = new google.maps.Marker({
+            map: $scope.map,
+            animation: google.maps.Animation.DROP,
+            position: Fira,
+            title: "PUNTO 1"
+        });
+        var marker2 = new google.maps.Marker({
+            map: $scope.map,
+            animation: google.maps.Animation.DROP,
+            position: CampNou,
+            title: "PUNTO 2"
+        });
+        var marker3 = new google.maps.Marker({
+            map: $scope.map,
+            animation: google.maps.Animation.DROP,
+            position: ZonaFranca,
+            title: "PUNTO 3"
+        });
+
+
+        var infoWindow = new google.maps.InfoWindow({
+            content: "Punto de encuentro FIRA"
+        });
+        var infoWindow2 = new google.maps.InfoWindow({
+            content: "Punto de encuentro Camp Nou"
+        });
+        var infoWindow3 = new google.maps.InfoWindow({
+            content: "Punto de encuentro Zona Franca"
+        });
+
+        google.maps.event.addListener(marker, 'click', function () {
+            infoWindow.open($scope.map, marker);
+        });
+        google.maps.event.addListener(marker2, 'click', function () {
+            infoWindow2.open($scope.map, marker2);
+        });
+        google.maps.event.addListener(marker3, 'click', function () {
+            infoWindow3.open($scope.map, marker3);
+        });
+
+      });
 
  }, function(error){
    console.log("Could not get location");
  });
-    }])
+
+}])
 
 
   .controller('bOOK2SHARECtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
@@ -296,7 +575,8 @@ angular.module('app.controllers', ['angular.filter'])
     }
   }])
 
-  .controller('AddBookCtrl', ['$http', '$state', '$scope', '$rootScope', '$ionicPopup', function ($http, $state, $scope, $rootScope, $ionicPopup) {
+  .controller('AddBookCtrl', ['$http', '$state', '$scope', '$rootScope', '$ionicPopup','$cordovaCamera',
+   function ($http, $state, $scope, $rootScope, $ionicPopup, $cordovaCamera) {
 
     $scope.newBook = {};
     //$scope.newBook.propietary = $rootScope.userdata.name;
@@ -321,4 +601,23 @@ angular.module('app.controllers', ['angular.filter'])
           }
         });
     };
+    $scope.takePicture = function() {
+        var options = {
+            quality : 75,
+            destinationType : Camera.DestinationType.DATA_URL,
+            sourceType : Camera.PictureSourceType.CAMERA,
+            allowEdit : true,
+            encodingType: Camera.EncodingType.JPEG,
+            targetWidth: 300,
+            targetHeight: 300,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: false
+        };
+
+        $cordovaCamera.getPicture(options).then(function(imageData) {
+            $scope.imgURI = "data:image/jpeg;base64," + imageData;
+        }, function(err) {
+            // An error occured. Show a message to the user
+        });
+    }
   }]);

@@ -1,16 +1,73 @@
+<link rel="stylesheet" href="../css/messaging.css">
 <ion-view view-title="Chats">
   <ion-content>
+    <a ui-sref="composer" ng-click="showComposer($event)">
+      <img style="display: block;margin: auto;" height="64px" src="../img/sobre.png"></a>
+    <ion-content>
     <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats" type="item-text-wrap" href="#/tab/chats/{{chat.id}}">
-        <img ng-src="{{chat.face}}">
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="user in users"
+       ng-if="conversations | contains:user._id" ng-click="selectConversation(user)" >
+        <img src="./img/icono.png">
         <h2>{{user.name}}</h2>
-        <p>{{chat.lastText}}</p>
+        <p>You have messages</p>
         <i class="icon ion-chevron-right icon-accessory"></i>
-
         <ion-option-button class="button-assertive" ng-click="remove(chat)">
           Delete
         </ion-option-button>
       </ion-item>
     </ion-list>
+    <div class="chat">
+        <div class="chat-container">
+            <div class="user-bar">
+                <div class="back">
+                    <i class="ion android-arrow-left"></i>
+                </div>
+                <div class="avatar">
+                    <img src="../img/icono.png" alt="Avatar">
+                </div>
+                <div class="name">
+                    <span ng-repeat="user in users | filterBy: ['_id']: conversation.user">
+                        {{user.name}}</span>
+                    <span class="status"></span>
+                </div>
+                <div class="actions more">
+                    <i class="zmdi zmdi-more-vert"></i>
+                </div>
+                <div class="actions attachment">
+                    <i class="zmdi zmdi-attachment-alt"></i>
+                </div>
+                <div class="actions">
+                    <i class="zmdi zmdi-phone"></i>
+                </div>
+            </div>
+            <div class="conversation">
+                <div class="conversation-container">
+                        <div class="{{message.send}}" ng-repeat="message in conversation">
+                            {{message.content}}
+                            <span class="metadata"><span class="time">
+                                {{message.date  | date : "h:mm a" }}</span>
+                                <span class="tick"><img ng-src="{{message.tick}}">
+                                </span>
+                            </span>
+                    </div>
+                </div>
+                <form class="conversation-compose">
+                    <div class="emoji">
+                        <img src="../img/emoji.svg">
+                    </div>
+                    <input ng-model="newMessage.content" class="input-msg" name="input"
+                           placeholder="Type a message"
+                           autocomplete="off" autofocus>
+                    <button ng-click="sendMessage(conversation.user)" class="send">
+                        <div class="circle">
+                            <i class="ion-android-send"></i>
+                        </div>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
   </ion-content>
 </ion-view>
+<!--  ng-repeat="message in conversation" ng-if="message | contains:user._id" -->

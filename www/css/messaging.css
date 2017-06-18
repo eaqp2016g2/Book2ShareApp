@@ -1,8 +1,8 @@
-/* *, *:before, *:after {
+*, *:before, *:after {
     box-sizing: inherit;
-} */
+}
 
-/*html {
+html {
     box-sizing: border-box;
     height: 100%;
     margin: 0;
@@ -16,7 +16,7 @@ body {
     margin: 0;
     padding: 0;
     height: 100%;
-}*/
+}
 
 .page {
     width: 700px;
@@ -66,16 +66,16 @@ body {
 }
 
 .chat-container {
-    height: 100%;
+    height: 80%;
 }
 
 /* User Bar */
 
 .user-bar {
-    height: 55px;
+    height:50px;
     background: #005e54;
     color: #fff;
-    padding: 0 8px;
+    padding: 0 10px;
     font-size: 24px;
     position: relative;
     z-index: 1;

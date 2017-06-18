@@ -29,14 +29,16 @@ angular.module('app.routes', [])
       }
     }
   })
+
   .state('chatDetail', {
     url: '/chatdetail',
-    views: {
-      'chat.name': {
-        templateUrl: 'templates/chat-detail.html',
-        controller: 'chatDetailCtrl'
-      }
-    }
+    templateUrl: 'templates/chatDetail.html',
+    controller: 'chatTabDefaultPageCtrl'
+  })
+  .state('composer', {
+    url: '/composer',
+    templateUrl: 'templates/composer.html',
+    controller: 'chatTabDefaultPageCtrl'
   })
 
     .state('tabsController.homeTabDefaultPage', {

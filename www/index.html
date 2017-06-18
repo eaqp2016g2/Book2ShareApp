@@ -8,8 +8,9 @@
 
   <!--  <script src='//maps.googleapis.com/maps/api/js?sensor=false'></script>-->
     <!-- cordova script (this will be a 404 during development) -->
-    <script src="lib/ngCordova/dist/ng-cordova.js"></script>
+    <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
     <script src="cordova.js"></script>
+    
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
@@ -76,12 +77,13 @@
       <ion-content ng-controller="bOOK2SHARECtrl" padding="true" class="side-menu-left has-header ">
         <ion-list id="bOOK2SHARE-list2" data-componentid="list2">
           <ion-item class="item-avatar assertive" id="bOOK2SHARE-list-item7" data-componentid="list-item7">
+            <img src="./img/icono.png">
             <h2assertive>Hello {{userdata.name}}
               <p>{{userdata.email}}</p>
             </h2assertive>
           </ion-item>
           <ion-item class="item-icon-left" id="bOOK2SHARE-list-item10" ui-sref="tabsController.listTabDefaultPage" menu-close="" data-componentid="list-item10">
-            <i class="icon ion-ios-book"></i>Libros</ion-item>
+            <i class="icon ion-ios-book"></i> Mis Libros</ion-item>
           <ion-item class="item-icon-left" id="bOOK2SHARE-list-item16" ui-sref="tabsController.homeTabDefaultPage" menu-close="" data-componentid="list-item11">
             <i class="icon ion-ios-bookmarks"></i>Biblioteca</ion-item>
           <ion-item class="item-icon-left" id="bOOK2SHARE-list-item11" ui-sref="tabsController.chatTabDefaultPage" menu-close="" data-componentid="list-item11">
