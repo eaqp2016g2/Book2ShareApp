@@ -8,8 +8,8 @@
     </form>
     <ion-list id="homeTabDefaultPage-list2">
       <ion-item class="item-divider"id="homeTabDefaultPage-list-item-divider2">BIBLIOTECA</ion-item>
-          <ion-item class="item-thumbnail-left" ng-repeat="book in books" ui-sref="bookinfo" ng-click = "">
-            <img src="./img/descarga.png">
+          <ion-item class="item-thumbnail-left" ng-repeat="book in books" ui-sref="infoBiblioteca" ng-click = "searchBook(book)">
+            <img src="./img/libro.png">
             <h2> {{book.title}}</h2>
             <p>Autor: {{book.author[0]}}</p>
             <p ng-repeat="user in users | where:{_id: book.propietary}" >Propietario: {{user.name}}</p>

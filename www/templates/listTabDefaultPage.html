@@ -1,15 +1,15 @@
 <ion-view title="MIS LIBROS" id="page2">
   <ion-content padding="true" class="has-header">
     <form id="listTabDefaultPage-form2" class="list">
-      <label class="item item-input" id="listTabDefaultPage-search3" name="SearchBook">
+      <label class="item item-input item-icon-right" id="ListTabDefaultPage-search3" name="SearchBook">
         <i class="icon ion-search placeholder-icon"></i>
-        <input type="search" placeholder="Search book">
+        <input type="text" placeholder="Search book" ng-model="titleBook" ng-click="SearchBook()">
       </label>
     </form>
     <ion-list id="listTabDefaultPage-list2">
       <ion-item class="item-divider"id="listTabDefaultPage-list-item-divider2"> Mis Libros</ion-item>
           <ion-item class="item-thumbnail-left item-icon-right" ng-repeat="book in books"  ui-sref="bookinfo" ng-click = "searchBook(book)">
-            <img height="50 px" width="30 px" src="./img/juegotronos.jpg">
+            <img height="50 px" width="30 px" src="./img/libro.png">
             <h2> {{book.title}}</h2>
             <p> Autor: {{book.author[0]}}</p>
             <p> Género: {{book.genre[0]}}</p>

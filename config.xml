@@ -34,12 +34,13 @@
         <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png" />
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
     </platform>
-    <plugin name="cordova-plugin-file-transfer" spec="~1.6.3" />
-    <plugin name="cordova-plugin-camera" spec="~2.4.1">
+    <plugin name="cordova-plugin-camera" spec="^2.4.1">
         <variable name="CAMERA_USAGE_DESCRIPTION" value=" " />
         <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value=" " />
     </plugin>
-    <plugin name="cordova-plugin-geolocation" spec="~2.4.3">
+    <plugin name="cordova-plugin-file-transfer" spec="^1.6.3" />
+    <plugin name="cordova-plugin-geolocation" spec="^2.4.3">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value=" " />
     </plugin>
+    <plugin name="org.apache.cordova.inappbrowser" spec="~0.2.2" />
 </widget>

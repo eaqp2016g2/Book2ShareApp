@@ -35,6 +35,7 @@ angular.module('app.controllers', ['angular.filter'])
       })
         .then(function (response) {
           $scope.books = response.data;
+
           console.log('Libros obtenidos para mi' + $scope.books)
         }, function (error) {
           console.log('Error al obtener los libros: ' + error.data);
@@ -60,12 +61,35 @@ angular.module('app.controllers', ['angular.filter'])
     };
 
     $scope.searchBook = function (book) {
+
       console.log(book);
       $rootScope.booksel = book;
       console.log("libro sel " + book.title + "******" + book._id);
       $state.go("bookinfo")
     }
+    $scope.Reload = function () {
+      location.reload()
+    }
+    $scope.SearchBook = function () {
+      console.log("Buscando Libro *****  " + this.titleBook);
+      $http({
+        url: API + '/book/search/title/' + this.titleBook,
+        method: "GET",
+        data: $scope.titleBook
+      })
+        .then(function (response) {
+          if (response.data !== null) {
+            $rootScope.title = {};
+            $scope.books = response.data;
+            //$state.go("library")
+          } else {
+            console.log("No hi ha cap llibre");
+          }
+        });
+    }
   }])
+
+
 
   .controller('bookInfoCtrl', ['$http', '$scope', '$stateParams', '$rootScope', '$state', function ($http, $scope, $stateParams, $rootScope, $state) {
 
@@ -99,9 +123,46 @@ angular.module('app.controllers', ['angular.filter'])
       $rootScope.booksel = book;
       console.log("libro sel " + book.title + "******" + book._id);
       $state.go("editbook")
+
     }
 
   }])
+  .controller('infoBibliotecaCtrl', ['$http', '$scope', '$stateParams', '$rootScope', '$state', function ($http, $scope, $stateParams, $rootScope, $state) {
+
+    /// INFORMACIÓN DE LIBRO
+
+    $scope.users = {};
+    $scope.book = {};
+
+    $http.get(API + '/users')
+      .then(function (response) {
+        $scope.users = response.data;
+      }, function (error) {
+        console.log('Error al obtener los usuarios: ' + error.data);
+      });
+
+    console.log($rootScope.booksel);
+
+    $http.get(API + '/book/' + $rootScope.booksel._id)
+      .then(function (response) {
+        $scope.book = response.data;
+      }, function (error) {
+        console.log('Error al obtener el libro: ' + error.data);
+      });
+
+    //$scope.book = $rootScope.booksel;
+    console.log($scope.book);
+    //$rootScope.booksel = {};
+
+
+    /*$scope.SelectBook = function (book) {
+      $rootScope.booksel = book;
+      console.log("libro sel " + book.title + "******" + book._id);
+      $state.go("editbook")
+    }*/
+
+  }])
+
 
   .controller('chatTabDefaultPageCtrl', ['$http','$scope', '$stateParams','$state','$rootScope', function ($http, $scope, $stateParams, $state, $rootScope) {
 
@@ -420,6 +481,7 @@ angular.module('app.controllers', ['angular.filter'])
       var Fira = new google.maps.LatLng( 41.35448,  2.12698);
       var ZonaFranca = new google.maps.LatLng(41.365556, 2.141667);
       var CampNou = new google.maps.LatLng(41.379635, 2.124209);
+      var Castelldefels = new google.maps.LatLng(41.278924, 1.979655);
 
       var mapOptions = {
         center: latLng,
@@ -457,6 +519,12 @@ angular.module('app.controllers', ['angular.filter'])
             position: ZonaFranca,
             title: "PUNTO 3"
         });
+        var marker4 = new google.maps.Marker({
+            map: $scope.map,
+            animation: google.maps.Animation.DROP,
+            position: Castelldefels,
+            title: "PUNTO 4"
+        });
 
 
         var infoWindow = new google.maps.InfoWindow({
@@ -468,6 +536,9 @@ angular.module('app.controllers', ['angular.filter'])
         var infoWindow3 = new google.maps.InfoWindow({
             content: "Punto de encuentro Zona Franca"
         });
+        var infoWindow4 = new google.maps.InfoWindow({
+            content: "Punto de encuentro Castelldefels(Estacion)"
+        });
 
         google.maps.event.addListener(marker, 'click', function () {
             infoWindow.open($scope.map, marker);
@@ -477,6 +548,9 @@ angular.module('app.controllers', ['angular.filter'])
         });
         google.maps.event.addListener(marker3, 'click', function () {
             infoWindow3.open($scope.map, marker3);
+        });
+        google.maps.event.addListener(marker4, 'click', function () {
+            infoWindow4.open($scope.map, marker4);
         });
 
       });
@@ -494,7 +568,8 @@ angular.module('app.controllers', ['angular.filter'])
     function ($scope, $stateParams) {
     }])
 
-  .controller('LoginCtrl', ['$scope', '$http', '$state', '$ionicPopup', '$rootScope', 'logout', function ($scope, $http, $state, $ionicPopup, $rootScope, $AuthService, logout) {
+  .controller('LoginCtrl', ['$scope', '$http', '$state', '$ionicPopup', '$rootScope', 'logout',
+  function ($scope, $http, $state, $ionicPopup, $rootScope, $AuthService,logout) {
     $scope.user = {};
     $scope.login = function () {
       $http({
@@ -543,6 +618,12 @@ angular.module('app.controllers', ['angular.filter'])
       $rootScope.userdata = {};
       $rootScope.logged = false;
     };
+    // OAuth with facebook
+
+
+
+
+
   }])
   .controller('SignupCtrl', ['$http', '$state', '$scope', '$rootScope', function ($http, $state, $scope, $rootScope) {
     $http({

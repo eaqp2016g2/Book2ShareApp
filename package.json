@@ -9,13 +9,17 @@
         "cordova-plugin-file": "^4.0.0",
         "cordova-plugin-file-transfer": "^1.6.3",
         "cordova-plugin-geolocation": "^2.4.3",
+        "cordova-plugin-inappbrowser": "^0.2.2",
+        "express-session": "^1.15.3",
         "gulp": "^3.5.6",
         "gulp-concat": "^2.2.0",
         "gulp-minify-css": "^0.3.0",
         "gulp-rename": "^1.2.0",
         "gulp-sass": "^2.0.4",
         "passport": "^0.3.2",
-        "socket.io": "^1.7.3"
+        "passport-facebook": "^2.1.1",
+        "socket.io": "^1.7.3",
+        "org.apache.cordova.inappbrowser": "~0.2.2"
     },
     "devDependencies": {
         "bower": "^1.3.3",
@@ -40,7 +44,8 @@
             },
             "cordova-plugin-geolocation": {
                 "GEOLOCATION_USAGE_DESCRIPTION": " "
-            }
+            },
+            "org.apache.cordova.inappbrowser": {}
         }
     }
 }

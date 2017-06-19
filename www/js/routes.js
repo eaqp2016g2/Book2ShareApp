@@ -29,6 +29,11 @@ angular.module('app.routes', [])
       }
     }
   })
+  .state('infoBiblioteca', {
+    url: '/infobiblioteca',
+    templateUrl: 'templates/infoBiblioteca.html',
+    controller: 'infoBibliotecaCtrl'
+  })
 
   .state('chatDetail', {
     url: '/chatdetail',
